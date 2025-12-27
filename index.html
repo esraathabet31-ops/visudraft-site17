@@ -1,3 +1,4 @@
+markdown
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,15 +29,21 @@
             background-size: 100% 100%;
             background-repeat: no-repeat;
         }
+        
+        /* Focus styles for accessibility */
+        button:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: 3px solid #2563eb;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body class="h-screen w-full flex items-center justify-center">
 
     <!-- Mobile Device Frame -->
-    <div class="relative w-full max-w-md h-[90vh] bg-white shadow-2xl rounded-3xl overflow-hidden border-8 border-gray-800 flex flex-col">
+    <main class="relative w-full max-w-md h-[90vh] bg-white shadow-2xl rounded-3xl overflow-hidden border-8 border-gray-800 flex flex-col" role="application" aria-label="Case Management App">
         
         <!-- Status Bar Simulation -->
-        <div class="bg-white px-6 py-3 flex justify-between items-center text-xs font-bold text-gray-800 border-b border-gray-100 z-10">
+        <div class="bg-white px-6 py-3 flex justify-between items-center text-xs font-bold text-gray-800 border-b border-gray-100 z-10" aria-hidden="true">
             <span>09:52 AM</span>
             <div class="flex space-x-1">
                 <div class="w-4 h-4 bg-gray-800 rounded-full opacity-20"></div>
@@ -46,8 +53,8 @@
         </div>
 
         <!-- SCREEN 0: ROLE SELECTION (Entry Point) -->
-        <div id="screen-role" class="screen active h-full p-6 justify-center items-center space-y-6">
-            <h1 class="text-2xl font-bold text-center mb-8">Select Role</h1>
+        <div id="screen-role" class="screen active h-full p-6 justify-center items-center space-y-6" aria-hidden="false">
+            <h1 class="text-2xl font-bold text-center mb-8" tabindex="-1">Select Role</h1>
             <button onclick="nav('screen-home')" class="w-full py-4 bg-blue-600 text-white rounded-xl shadow-lg font-semibold text-lg hover:bg-blue-700 transition">
                 Public User
             </button>
@@ -57,31 +64,31 @@
         </div>
 
         <!-- SCREEN 1: OFFICER CASES -->
-        <div id="screen-officer" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-officer" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex justify-between items-center">
-                <h1 class="text-2xl font-bold">Officer Cases</h1>
-                <i class="fas fa-user text-xl"></i>
+                <h1 class="text-2xl font-bold" tabindex="-1">Officer Cases</h1>
+                <i class="fas fa-user text-xl" role="img" aria-label="User Profile"></i>
             </header>
             <div class="px-6 flex-1 flex flex-col justify-center space-y-8 pb-10">
                 <!-- Unsolved Card -->
-                <div onclick="nav('screen-unsolved')" class="cursor-pointer group">
+                <button onclick="nav('screen-unsolved')" class="w-full text-left cursor-pointer group block">
                     <div class="h-40 border-2 border-gray-800 bg-gray-50 placeholder-x mb-2 group-hover:bg-gray-100 transition"></div>
                     <h2 class="text-xl font-semibold text-center">Unsolved Case</h2>
-                </div>
+                </button>
                 <!-- Solved Card -->
-                <div onclick="nav('screen-old-cases')" class="cursor-pointer group">
+                <button onclick="nav('screen-old-cases')" class="w-full text-left cursor-pointer group block">
                     <div class="h-40 border-2 border-gray-800 bg-gray-50 placeholder-x mb-2 group-hover:bg-gray-100 transition"></div>
                     <h2 class="text-xl font-semibold text-center">Solved Cases</h2>
-                </div>
+                </button>
             </div>
             <button onclick="nav('screen-role')" class="m-4 text-sm text-gray-500">Log Out</button>
         </div>
 
         <!-- SCREEN 2: UNSOLVED CASES -->
-        <div id="screen-unsolved" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-unsolved" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex items-center space-x-4 border-b">
-                <button onclick="nav('screen-officer')"><i class="fas fa-arrow-left"></i></button>
-                <h1 class="text-2xl font-bold">Unsolved Cases</h1>
+                <button onclick="nav('screen-officer')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-2xl font-bold" tabindex="-1">Unsolved Cases</h1>
             </header>
             <div class="p-6 space-y-4">
                 <h3 class="font-bold text-lg">New*</h3>
@@ -102,10 +109,10 @@
         </div>
 
         <!-- SCREEN 3: HOME PAGE (User) -->
-        <div id="screen-home" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-home" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex justify-between items-center">
-                <h1 class="text-2xl font-bold">Home Page</h1>
-                <i class="fas fa-user text-xl"></i>
+                <h1 class="text-2xl font-bold" tabindex="-1">Home Page</h1>
+                <i class="fas fa-user text-xl" role="img" aria-label="User Profile"></i>
             </header>
             <div class="px-6 pb-6">
                 <p class="text-xs text-gray-600 mb-6 text-justify leading-relaxed">
@@ -113,29 +120,29 @@
                 </p>
                 <div class="space-y-8">
                     <!-- New Case Card -->
-                    <div onclick="nav('screen-new-case')" class="cursor-pointer group">
+                    <button onclick="nav('screen-new-case')" class="w-full text-left cursor-pointer group block">
                         <div class="h-32 border-2 border-gray-800 bg-gray-50 placeholder-x mb-2 group-hover:bg-gray-100 transition"></div>
                         <h2 class="text-xl font-semibold text-center uppercase">New Case</h2>
-                    </div>
+                    </button>
                     <!-- Old Case Card -->
-                    <div onclick="nav('screen-old-cases')" class="cursor-pointer group">
+                    <button onclick="nav('screen-old-cases')" class="w-full text-left cursor-pointer group block">
                         <div class="h-32 border-2 border-gray-800 bg-gray-50 placeholder-x mb-2 group-hover:bg-gray-100 transition"></div>
                         <h2 class="text-xl font-semibold text-center uppercase">Old Case</h2>
-                    </div>
+                    </button>
                 </div>
             </div>
             <button onclick="nav('screen-role')" class="m-4 text-sm text-gray-500 text-center">Log Out</button>
         </div>
 
         <!-- SCREEN 4: OLD CASES -->
-        <div id="screen-old-cases" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-old-cases" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex justify-between items-center border-b">
                 <div class="flex items-center space-x-3">
-                    <button onclick="window.history.back ? window.history.back() : nav('screen-home')"><i class="fas fa-arrow-left"></i></button>
-                    <i class="far fa-bell text-xl"></i>
+                    <button onclick="window.history.back ? window.history.back() : nav('screen-home')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                    <button aria-label="Notifications"><i class="far fa-bell text-xl"></i></button>
                 </div>
-                <h1 class="text-2xl font-bold">Old Cases</h1>
-                <i class="far fa-edit text-xl"></i>
+                <h1 class="text-2xl font-bold" tabindex="-1">Old Cases</h1>
+                <button aria-label="Edit Cases"><i class="far fa-edit text-xl"></i></button>
             </header>
             <div class="p-6 space-y-4">
                 <button onclick="nav('screen-update-history')" class="w-full text-left p-4 border-2 border-gray-800 rounded-lg hover:bg-gray-50 transition">
@@ -151,18 +158,20 @@
         </div>
 
         <!-- SCREEN 5: NEW CASE -->
-        <div id="screen-new-case" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-new-case" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex items-center space-x-4">
-                <button onclick="nav('screen-home')"><i class="fas fa-arrow-left"></i></button>
-                <h1 class="text-2xl font-bold">New Case</h1>
+                <button onclick="nav('screen-home')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-2xl font-bold" tabindex="-1">New Case</h1>
             </header>
             <div class="px-6 flex-1 flex flex-col">
-                <textarea class="w-full h-40 border-2 border-gray-800 rounded-lg p-3 mb-6 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Write your complaint"></textarea>
+                <label for="complaint-text" class="sr-only">Complaint Details</label>
+                <textarea id="complaint-text" class="w-full h-40 border-2 border-gray-800 rounded-lg p-3 mb-6 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Write your complaint"></textarea>
                 
-                <label class="block text-sm font-semibold mb-2">Upload a file:</label>
+                <label class="block text-sm font-semibold mb-2" id="file-label-1">Upload a file:</label>
                 <div class="flex space-x-2 mb-6">
-                    <input type="text" disabled class="flex-1 border-2 border-gray-800 rounded px-2 bg-gray-100" placeholder="No file chosen">
-                    <button class="px-4 py-2 border-2 border-gray-800 rounded font-semibold hover:bg-gray-100">Browse...</button>
+                    <input type="text" readonly aria-labelledby="file-label-1" class="flex-1 border-2 border-gray-800 rounded px-2 bg-gray-100" placeholder="No file chosen">
+                    <input type="file" id="file-upload-1" class="hidden" onchange="this.previousElementSibling.value = this.value.split('\\').pop()">
+                    <button onclick="document.getElementById('file-upload-1').click()" class="px-4 py-2 border-2 border-gray-800 rounded font-semibold hover:bg-gray-100">Browse...</button>
                 </div>
 
                 <div class="flex items-center mb-4">
@@ -170,7 +179,8 @@
                     <label for="oldCaseCheck" class="text-sm">complain of old case</label>
                 </div>
 
-                <input type="text" class="w-full border-2 border-gray-800 rounded p-3 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter old case Id">
+                <label for="old-case-id" class="sr-only">Old Case ID</label>
+                <input type="text" id="old-case-id" class="w-full border-2 border-gray-800 rounded p-3 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter old case Id">
 
                 <div class="mt-auto mb-8">
                     <button onclick="nav('screen-id')" class="w-full py-3 border-2 border-gray-800 rounded-lg font-bold hover:bg-gray-800 hover:text-white transition">Continue</button>
@@ -179,28 +189,28 @@
         </div>
 
         <!-- SCREEN 6: CASE DETAILS -->
-        <div id="screen-details" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-details" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex justify-between items-start">
                 <div>
-                    <button onclick="nav('screen-unsolved')" class="mb-2"><i class="fas fa-arrow-left"></i></button>
-                    <h1 class="text-2xl font-bold leading-tight">Case Details<br><span class="text-lg font-normal text-gray-600">Case ID #001</span></h1>
+                    <button onclick="nav('screen-unsolved')" class="mb-2" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                    <h1 class="text-2xl font-bold leading-tight" tabindex="-1">Case Details<br><span class="text-lg font-normal text-gray-600">Case ID #001</span></h1>
                 </div>
-                <button onclick="nav('screen-chat')" class="text-2xl"><i class="far fa-comments"></i></button>
+                <button onclick="nav('screen-chat')" class="text-2xl" aria-label="Open Chat"><i class="far fa-comments"></i></button>
             </header>
             <div class="px-6 pb-6">
                 <p class="text-sm mb-4"><strong>Victims Name:</strong> abc</p>
                 
-                <label class="block text-sm font-bold mb-1">Case Details</label>
-                <div class="w-full h-24 border-2 border-gray-800 rounded p-2 mb-6 bg-gray-50 text-sm">
+                <h3 class="block text-sm font-bold mb-1">Case Details</h3>
+                <div class="w-full h-24 border-2 border-gray-800 rounded p-2 mb-6 bg-gray-50 text-sm" tabindex="0">
                     Complain details text goes here...
                 </div>
 
-                <label class="block text-sm font-bold mb-2">Evidence</label>
+                <h3 class="block text-sm font-bold mb-2">Evidence</h3>
                 <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center"><i class="fas fa-image text-3xl text-gray-400"></i></div>
-                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center"><i class="fas fa-image text-3xl text-gray-400"></i></div>
-                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center"><i class="fas fa-image text-3xl text-gray-400"></i></div>
-                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center"><i class="fas fa-image text-3xl text-gray-400"></i></div>
+                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center" role="img" aria-label="Evidence Image 1"><i class="fas fa-image text-3xl text-gray-400"></i></div>
+                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center" role="img" aria-label="Evidence Image 2"><i class="fas fa-image text-3xl text-gray-400"></i></div>
+                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center" role="img" aria-label="Evidence Image 3"><i class="fas fa-image text-3xl text-gray-400"></i></div>
+                    <div class="aspect-square bg-gray-200 rounded flex items-center justify-center" role="img" aria-label="Evidence Image 4"><i class="fas fa-image text-3xl text-gray-400"></i></div>
                 </div>
 
                 <button onclick="nav('screen-updation')" class="w-full py-3 border-2 border-gray-800 rounded-lg font-bold hover:bg-gray-800 hover:text-white transition">Update</button>
@@ -208,12 +218,12 @@
         </div>
 
         <!-- SCREEN 7: CHAT -->
-        <div id="screen-chat" class="screen h-full flex flex-col">
+        <div id="screen-chat" class="screen h-full flex flex-col" aria-hidden="true">
             <header class="p-6 border-b flex items-center space-x-4">
-                <button onclick="nav('screen-details')"><i class="fas fa-arrow-left"></i></button>
-                <h1 class="text-2xl font-bold">Chat</h1>
+                <button onclick="nav('screen-details')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-2xl font-bold" tabindex="-1">Chat</h1>
             </header>
-            <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50">
+            <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50" role="log" aria-label="Chat History">
                 <!-- Messages -->
                 <div class="flex justify-start">
                     <div class="bg-gray-300 rounded-lg rounded-tl-none px-4 py-2 max-w-[70%] text-sm">Hello, any update?</div>
@@ -228,11 +238,11 @@
             <!-- Fake Keyboard / Input Area -->
             <div class="p-2 bg-gray-200 border-t border-gray-300">
                 <div class="flex items-center bg-white rounded-full px-4 py-2 mb-2">
-                    <input type="text" placeholder="Type message..." class="flex-1 outline-none text-sm">
-                    <button class="ml-2"><i class="fas fa-paper-plane"></i></button>
+                    <input type="text" placeholder="Type message..." aria-label="Type message" class="flex-1 outline-none text-sm">
+                    <button class="ml-2" aria-label="Send Message"><i class="fas fa-paper-plane"></i></button>
                 </div>
                 <!-- Visual Keyboard Representation (Simplified) -->
-                <div class="grid grid-cols-10 gap-1 px-1 pb-2">
+                <div class="grid grid-cols-10 gap-1 px-1 pb-2" aria-hidden="true">
                     <div class="col-span-10 flex justify-center space-x-1 mb-1">
                         <span class="bg-white p-1 rounded text-xs shadow w-6 text-center">Q</span>
                         <span class="bg-white p-1 rounded text-xs shadow w-6 text-center">W</span>
@@ -254,19 +264,19 @@
         </div>
 
         <!-- SCREEN 8: CASE UPDATION -->
-        <div id="screen-updation" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-updation" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex items-center space-x-4">
-                <button onclick="nav('screen-details')"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="nav('screen-details')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
                 <div class="leading-tight">
-                    <h1 class="text-2xl font-bold">Case Updation</h1>
+                    <h1 class="text-2xl font-bold" tabindex="-1">Case Updation</h1>
                     <span class="text-sm text-gray-600">Case ID #001</span>
                 </div>
             </header>
             <div class="px-6 flex-1 flex flex-col">
                 <p class="text-sm mb-4"><strong>Victims Name:</strong> abc</p>
                 
-                <label class="block text-sm font-bold mb-1">Officer Remarks</label>
-                <textarea class="w-full h-32 border-2 border-gray-800 rounded p-2 mb-6 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Complain"></textarea>
+                <label for="officer-remarks" class="block text-sm font-bold mb-1">Officer Remarks</label>
+                <textarea id="officer-remarks" class="w-full h-32 border-2 border-gray-800 rounded p-2 mb-6 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Complain"></textarea>
 
                 <button onclick="alert('Case Updated!')" class="w-full py-3 border-2 border-gray-800 rounded-lg font-bold mb-4 hover:bg-gray-100">Update Case</button>
                 
@@ -277,16 +287,17 @@
         </div>
 
         <!-- SCREEN 9: ID UPLOAD -->
-        <div id="screen-id" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-id" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex items-center space-x-4">
-                <button onclick="nav('screen-new-case')"><i class="fas fa-arrow-left"></i></button>
-                <h1 class="text-2xl font-bold">ID</h1>
+                <button onclick="nav('screen-new-case')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-2xl font-bold" tabindex="-1">ID</h1>
             </header>
             <div class="px-6 flex-1 flex flex-col">
-                <label class="block text-sm font-semibold mb-2">Upload Inmates ID:</label>
+                <label class="block text-sm font-semibold mb-2" id="file-label-2">Upload Inmates ID:</label>
                 <div class="flex space-x-2 mb-6">
-                    <input type="text" disabled class="flex-1 border-2 border-gray-800 rounded px-2 bg-gray-100" placeholder="">
-                    <button class="px-4 py-2 border-2 border-gray-800 rounded font-semibold hover:bg-gray-100">Browse...</button>
+                    <input type="text" readonly aria-labelledby="file-label-2" class="flex-1 border-2 border-gray-800 rounded px-2 bg-gray-100" placeholder="">
+                    <input type="file" id="file-upload-2" class="hidden" onchange="this.previousElementSibling.value = this.value.split('\\').pop()">
+                    <button onclick="document.getElementById('file-upload-2').click()" class="px-4 py-2 border-2 border-gray-800 rounded font-semibold hover:bg-gray-100">Browse...</button>
                 </div>
 
                 <div class="mt-auto mb-8">
@@ -296,10 +307,10 @@
         </div>
 
         <!-- SCREEN 10: CASE UPDATE HISTORY -->
-        <div id="screen-update-history" class="screen h-full overflow-y-auto no-scrollbar">
+        <div id="screen-update-history" class="screen h-full overflow-y-auto no-scrollbar" aria-hidden="true">
             <header class="p-6 flex items-center space-x-4 border-b">
-                <button onclick="nav('screen-old-cases')"><i class="fas fa-arrow-left"></i></button>
-                <h1 class="text-2xl font-bold">Case Update</h1>
+                <button onclick="nav('screen-old-cases')" aria-label="Go back"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-2xl font-bold" tabindex="-1">Case Update</h1>
             </header>
             <div class="p-6 space-y-6">
                 <div class="flex justify-between items-center">
@@ -340,19 +351,27 @@
             </div>
         </div>
 
-    </div>
+    </main>
 
     <script>
-        // Simple Navigation Logic
+        // Enhanced Navigation Logic with Focus Management
         function nav(screenId) {
             // Hide all screens
             document.querySelectorAll('.screen').forEach(el => {
                 el.classList.remove('active');
+                el.setAttribute('aria-hidden', 'true');
             });
             // Show target screen
             const target = document.getElementById(screenId);
             if (target) {
                 target.classList.add('active');
+                target.setAttribute('aria-hidden', 'false');
+                
+                // Move focus to the main heading of the new screen for accessibility
+                const heading = target.querySelector('h1');
+                if (heading) {
+                    heading.focus();
+                }
             }
         }
     </script>
